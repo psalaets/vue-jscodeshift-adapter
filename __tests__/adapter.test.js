@@ -21,17 +21,17 @@ const style = `
 }
 `;
 
-const vueComponentSource = (template, script, style) => {
-  const templatePart = `<template>${template}</template>`;
-  const scriptPart = `<script>${script}</script>`;
-  const stylePart = `<style>${style}</style>`;
+const sfc = (template, script, style) => {
+  const templateBlock = `<template>${template}</template>`;
+  const scriptBlock = `<script>${script}</script>`;
+  const styleBlock = `<style>${style}</style>`;
 
   return `
-${templatePart}
+${templateBlock}
 
-${scriptPart}
+${scriptBlock}
 
-${stylePart}
+${styleBlock}
 `;
 };
 
@@ -43,7 +43,7 @@ test('passes component code as fileInfo.source', () => {
   });
 
   adapted({
-    source: vueComponentSource(template, script, style)
+    source: sfc(template, script, style)
   }, {}, {});
 
   expect(source).toBe(script);
@@ -55,7 +55,7 @@ test('returns transform\'s undefined return value', () => {
   });
 
   const result = adapted({
-    source: vueComponentSource(template, script, style)
+    source: sfc(template, script, style)
   }, {}, {});
 
   expect(result).toBe(undefined);
@@ -67,8 +67,8 @@ test('returns transform\'s string return value with the other sfc pieces', () =>
   });
 
   const result = adapted({
-    source: vueComponentSource(template, script, style)
+    source: sfc(template, script, style)
   }, {}, {});
 
-  expect(result).toBe(vueComponentSource(template, 'const a = 4;', style));
+  expect(result).toBe(sfc(template, 'const a = 4;', style));
 });
