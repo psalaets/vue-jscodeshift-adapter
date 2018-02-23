@@ -1,18 +1,16 @@
 const compiler = require('vue-template-compiler');
+const descriptorToString = require('vue-sfc-descriptor-to-string');
 
 module.exports = adapt;
 
 function adapt(transform) {
   return function newTransform(fileInfo, api, options) {
     const fullSource = fileInfo.source;
-    const sfcDescriptor = compiler.parseComponent(fullSource);
 
+    const sfcDescriptor = compiler.parseComponent(fullSource);
     const scriptBlock = sfcDescriptor.script;
 
-    const script = sfcDescriptor.script.content;
-    const template = sfcDescriptor.template.content;
-    const styles = sfcDescriptor.styles;
-
+    const script = scriptBlock.content;
     fileInfo.source = script;
 
     const result = transform(fileInfo, api, options);
@@ -20,24 +18,8 @@ function adapt(transform) {
     if (result === undefined) {
       return undefined;
     } else {
-      let before = fullSource
+      scriptBlock.content = result;
+      return descriptorToString(sfcDescriptor);
     }
-
-    return `
-<template>${indent(2, template)}</template>
-
-<script>${result}</script>
-
-<style>${styles[0].content}</style>
-`;
-
-    return result;
   };
-}
-
-function indent(spaces, code) {
-  return code
-    .split(/\n/)
-    .map(line => line ? `${' '.repeat(spaces)}${line}` : '')
-    .join('\n');
 }
