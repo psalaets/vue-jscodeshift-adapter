@@ -49,7 +49,56 @@ test('passes component code as fileInfo.source', () => {
   expect(source).toBe(script);
 });
 
-test('returns transform\'s undefined return value', () => {
+test('passes component path as fileInfo.path', () => {
+  let path = null;
+  const adapted = adapter(function transform(fileInfo, api, options) {
+    path = fileInfo.path;
+  });
+
+  adapted({
+    path: '/the/path',
+    source: sfc(template, script, style)
+  }, {}, {});
+
+  expect(path).toBe('/the/path');
+});
+
+
+test('passes api to transform', () => {
+  const apiPassed = {
+    jscodeshift: () => { },
+    stats: () => { }
+  };
+  let apiSeen = null;
+  const adapted = adapter(function transform(fileInfo, api, options) {
+    apiSeen = api;
+  });
+
+  adapted({
+    source: sfc(template, script, style)
+  }, apiPassed, {});
+
+  expect(apiSeen.jscodeshift).toBe(apiPassed.jscodeshift);
+  expect(apiSeen.stats).toBe(apiPassed.stats);
+});
+
+test('passes options to transform', () => {
+  const optionsPassed = {
+    blah: 1
+  };
+  let optionsSeen = null;
+  const adapted = adapter(function transform(fileInfo, api, options) {
+    optionsSeen = options;
+  });
+
+  const result = adapted({
+    source: sfc(template, script, style)
+  }, {}, optionsPassed);
+
+  expect(optionsSeen.blah).toBe(optionsPassed.blah);
+});
+
+test('returns undefined if transform returns undefined', () => {
   const adapted = adapter(function transform(fileInfo, api, options) {
     return undefined;
   });
@@ -61,7 +110,7 @@ test('returns transform\'s undefined return value', () => {
   expect(result).toBe(undefined);
 });
 
-test('returns transform\'s string return value with the other sfc pieces', () => {
+test('returns sfc with new script if transform returns different string', () => {
   const adapted = adapter(function transform(fileInfo, api, options) {
     return 'const a = 4;';
   });
