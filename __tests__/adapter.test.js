@@ -110,6 +110,30 @@ test('returns undefined if transform returns undefined', () => {
   expect(result).toBe(undefined);
 });
 
+test('returns null if transform returns null', () => {
+  const adapted = adapter(function transform(fileInfo, api, options) {
+    return null;
+  });
+
+  const result = adapted({
+    source: sfc(template, script, style)
+  }, {}, {});
+
+  expect(result).toBe(null);
+});
+
+test('returns empty string if transform returns empty string', () => {
+  const adapted = adapter(function transform(fileInfo, api, options) {
+    return '';
+  });
+
+  const result = adapted({
+    source: sfc(template, script, style)
+  }, {}, {});
+
+  expect(result).toBe('');
+});
+
 test('returns sfc with new script if transform returns different string', () => {
   const adapted = adapter(function transform(fileInfo, api, options) {
     return 'const a = 4;';

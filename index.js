@@ -15,8 +15,8 @@ function adapt(transform) {
 
     const result = transform(fileInfo, api, options);
 
-    if (result === undefined) {
-      return undefined;
+    if (!result) {
+      return result;
     } else {
       scriptBlock.content = result;
       return descriptorToString(sfcDescriptor);
