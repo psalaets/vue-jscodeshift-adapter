@@ -1,14 +1,22 @@
 {
   "name": "vue-jscodeshift-adapter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Run jscodeshift on Vue single file components",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["vue", "sfc", "component", "refactor", "codemod", "jscodeshift"],
+  "author": "Paul Salaets <psalaets@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psalaets/vue-jscodeshift-adapter.git"
+  },
+  "homepage": "https://github.com/psalaets/vue-jscodeshift-adapter",
+  "bugs": {
+    "url": "https://github.com/psalaets/vue-jscodeshift-adapter/issues"
+  },
   "devDependencies": {
     "jest": "^22.1.4",
     "jscodeshift": "^0.4.1",
