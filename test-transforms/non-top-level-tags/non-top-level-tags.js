@@ -9,10 +9,8 @@ module.exports = adapt((fileInfo, api, options) => {
 `;
 
   fileInfo.script.content = `
-// this is new
-` + fileInfo.script.content;
+// this is new` + fileInfo.script.content;
 
   fileInfo.style.content = `
-/* this is new too */
-` + fileInfo.style.content;
+/* this is new too */` + fileInfo.style.content;
 });
