@@ -172,15 +172,3 @@ test('returns undefined if transform returns empty string', () => {
 
   expect(result).toBe(undefined);
 });
-
-test('returns sfc with new script if transform returns different string', () => {
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    return 'const a = 4;';
-  });
-
-  const result = adapted({
-    source: sfc(template, script, style)
-  }, {}, {});
-
-  expect(result).toBe(sfc(template, 'const a = 4;', style));
-});
