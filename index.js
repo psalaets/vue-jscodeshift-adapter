@@ -27,7 +27,7 @@ function adapt(transform) {
     }
 
     if (!newScriptContent) {
-      return newScriptContent;
+      return undefined;
     } else {
       scriptBlock.content = newScriptContent;
       return descriptorToString(sfcDescriptor);

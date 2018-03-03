@@ -149,7 +149,7 @@ test('returns undefined if transform returns undefined', () => {
   expect(result).toBe(undefined);
 });
 
-test('returns null if transform returns null', () => {
+test('returns undefined if transform returns null', () => {
   const adapted = adapter(function transform(fileInfo, api, options) {
     return null;
   });
@@ -158,10 +158,10 @@ test('returns null if transform returns null', () => {
     source: sfc(template, script, style)
   }, {}, {});
 
-  expect(result).toBe(null);
+  expect(result).toBe(undefined);
 });
 
-test('returns empty string if transform returns empty string', () => {
+test('returns undefined if transform returns empty string', () => {
   const adapted = adapter(function transform(fileInfo, api, options) {
     return '';
   });
@@ -170,7 +170,7 @@ test('returns empty string if transform returns empty string', () => {
     source: sfc(template, script, style)
   }, {}, {});
 
-  expect(result).toBe('');
+  expect(result).toBe(undefined);
 });
 
 test('returns sfc with new script if transform returns different string', () => {
