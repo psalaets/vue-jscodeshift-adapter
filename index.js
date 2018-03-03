@@ -12,6 +12,9 @@ function adapt(transform) {
     const scriptBlock = sfcDescriptor.script;
     const script = scriptBlock.content;
 
+    const styleBlock = sfcDescriptor.styles[0];
+    const style = styleBlock.content;
+
     fileInfo.source = script;
     fileInfo.script = {
       content: script
@@ -19,6 +22,9 @@ function adapt(transform) {
     fileInfo.template = {
       content: $('template').html()
     };
+    fileInfo.style = {
+      content: style
+    }
 
     const result = transform(fileInfo, api, options);
 

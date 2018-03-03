@@ -75,6 +75,19 @@ test('passes <template> content as fileInfo.template.content', () => {
   expect(templateContent).toBe(template);
 });
 
+test('passes <style> content as fileInfo.style.content', () => {
+  let styleContent = null;
+  const adapted = adapter(function transform(fileInfo, api, options) {
+    styleContent = fileInfo.style.content;
+  });
+
+  adapted({
+    source: sfc(template, script, style)
+  }, {}, {});
+
+  expect(styleContent).toBe(style);
+});
+
 test('passes component path as fileInfo.path', () => {
   let path = null;
   const adapted = adapter(function transform(fileInfo, api, options) {
