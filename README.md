@@ -12,9 +12,16 @@ npm install vue-jscodeshift-adapter -D
 
 The instructions below assume you're familiar with [jscodeshift](https://github.com/facebook/jscodeshift).
 
+### 1. Create a warpped transform function
+
 This module wraps the `transform()` function, enabling it to run on Vue single file components (sfc).
 
-### 1a. Modify a sfc's script, template or style
+The two main use cases are:
+
+a. Modify one or more parts of an sfc
+b. Run a codemod on just the `<script>` part of an sfc
+
+#### a. Modify a sfc's script, template or style
 
 `my-transform.js`:
 
@@ -36,11 +43,11 @@ function myTransform(fileInfo, api, options) {
 module.exports = adapt(myTransform);
 ```
 
-### 1b. Run an existing codemod on sfc
+#### b. Run an existing codemod on sfc
 
-You can run [jscodeshift-compatible codemods](https://www.npmjs.com/search?q=codemod%20jscodeshift&page=1&ranking=optimal) on your sfc because
+After wrapping, you can run [jscodeshift-compatible codemods](https://www.npmjs.com/search?q=codemod%20jscodeshift&page=1&ranking=optimal) on your sfc because
 
-1. `fileInfo.source` is the content of the sfc's `<script>`
+1. `fileInfo.source` will be the content of the sfc's `<script>`
 2.  If `transform()` returns a string, that string becomes the content of `<script>`
 
 `my-transform.js`:
