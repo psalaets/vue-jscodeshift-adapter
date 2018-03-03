@@ -6,7 +6,14 @@
   "scripts": {
     "test": "jest"
   },
-  "keywords": ["vue", "sfc", "component", "refactor", "codemod", "jscodeshift"],
+  "keywords": [
+    "vue",
+    "sfc",
+    "component",
+    "refactor",
+    "codemod",
+    "jscodeshift"
+  ],
   "author": "Paul Salaets <psalaets@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -23,6 +30,7 @@
     "jscodeshift-helper": "^1.1.0"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "vue-sfc-descriptor-to-string": "^1.0.0",
     "vue-template-compiler": "^2.5.13"
   }
