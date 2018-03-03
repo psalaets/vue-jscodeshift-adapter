@@ -16,23 +16,41 @@ function adapt(transform) {
     const style = styleBlock.content;
 
     fileInfo.source = script;
-    fileInfo.script = {
-      content: script
-    };
-    fileInfo.template = {
-      content: $('template').html()
-    };
-    fileInfo.style = {
-      content: style
+    fileInfo.script = createOutputBlock('script', script);
+    fileInfo.template = createOutputBlock('template', $('template').html());
+    fileInfo.style = createOutputBlock('style', style);
+
+    let newScriptContent = transform(fileInfo, api, options);
+
+    if (fileInfo.script.contentChanged) {
+      newScriptContent = fileInfo.script.content;
     }
 
-    const result = transform(fileInfo, api, options);
-
-    if (!result) {
-      return result;
+    if (!newScriptContent) {
+      return newScriptContent;
     } else {
-      scriptBlock.content = result;
+      scriptBlock.content = newScriptContent;
       return descriptorToString(sfcDescriptor);
+    }
+  };
+}
+
+function createOutputBlock(type, content, attributes = {}) {
+  let _contentChanged = false;
+  let _content = content;
+
+  return {
+    type,
+    attributes,
+    get contentChanged() {
+      return _contentChanged;
+    },
+    get content() {
+      return _content;
+    },
+    set content(c) {
+      _contentChanged = true;
+      _content = c;
     }
   };
 }
