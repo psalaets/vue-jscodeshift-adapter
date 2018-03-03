@@ -7,7 +7,10 @@ module.exports = adapt;
 function adapt(transform) {
   return function newTransform(fileInfo, api, options) {
     const sfcDescriptor = compiler.parseComponent(fileInfo.source);
+
+    const templateBlock = sfcDescriptor.template;
     const $ = cheerio.load(fileInfo.source);
+    const template = $('template').html();
 
     const scriptBlock = sfcDescriptor.script;
     const script = scriptBlock.content;
@@ -17,20 +20,33 @@ function adapt(transform) {
 
     fileInfo.source = script;
     fileInfo.script = createOutputBlock('script', script);
-    fileInfo.template = createOutputBlock('template', $('template').html());
+    fileInfo.template = createOutputBlock('template', template);
     fileInfo.style = createOutputBlock('style', style);
 
     let newScriptContent = transform(fileInfo, api, options);
 
-    if (fileInfo.script.contentChanged) {
-      newScriptContent = fileInfo.script.content;
+    if (!!newScriptContent) {
+      fileInfo.script.content = newScriptContent;
     }
 
-    if (!newScriptContent) {
-      return undefined;
+    const hasChanges = [
+      fileInfo.script,
+      fileInfo.template,
+      fileInfo.style
+    ].some(b => b.contentChanged);
+
+    if (hasChanges) {
+      templateBlock.content = fileInfo.template.content;
+      scriptBlock.content = fileInfo.script.content;
+      styleBlock.content = fileInfo.style.content;
+
+      return descriptorToString(sfcDescriptor, {
+        indents: {
+          template: 0
+        }
+      });
     } else {
-      scriptBlock.content = newScriptContent;
-      return descriptorToString(sfcDescriptor);
+      return undefined;
     }
   };
 }
