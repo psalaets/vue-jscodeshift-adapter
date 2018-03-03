@@ -7,9 +7,9 @@ module.exports = adapt;
 function adapt(transform) {
   return function newTransform(fileInfo, api, options) {
     const sfcDescriptor = compiler.parseComponent(fileInfo.source);
+    const $ = cheerio.load(fileInfo.source);
 
     const templateBlock = sfcDescriptor.template;
-    const $ = cheerio.load(fileInfo.source);
     const template = $('template').html();
 
     const scriptBlock = sfcDescriptor.script;
