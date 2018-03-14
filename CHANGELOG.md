@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.1.1] - 2018-03-13
+### Fixed
+
+- No longer changing spacing inside `<template>` when `transform()` doesn't touch it ([#3](https://github.com/psalaets/vue-jscodeshift-adapter/issues/3))
+
 ## [1.1.0] - 2018-03-03
 ### Added
 
