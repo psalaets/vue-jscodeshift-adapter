@@ -2,6 +2,9 @@ const compiler = require('vue-template-compiler');
 const descriptorToString = require('vue-sfc-descriptor-to-string');
 const cheerio = require('cheerio');
 
+const detectIndent = require('detect-indent');
+const indentString = require('indent-string');
+
 module.exports = adapt;
 
 function adapt(transform) {
@@ -9,8 +12,12 @@ function adapt(transform) {
     const sfcDescriptor = compiler.parseComponent(fileInfo.source);
     const $ = cheerio.load(fileInfo.source);
 
+    // contents of template including outer <template> pair
+    const fullTemplate = $.html($('template'));
+    const templateIndent = detectIndent(fullTemplate);
+
     const templateBlock = sfcDescriptor.template;
-    const template = $('template').html();
+    const template = indentString(templateBlock.content, templateIndent.count, templateIndent.indent);
 
     const scriptBlock = sfcDescriptor.script;
     const script = scriptBlock.content;
