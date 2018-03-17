@@ -47,7 +47,7 @@ export default {
 .widget {
   color: red;
 }
-</style>a
+</style>
 `;
 
 testTransform(transform, 'Widget.vue', input, output);
