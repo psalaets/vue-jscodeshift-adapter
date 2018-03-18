@@ -1,4 +1,4 @@
-const adapt = require('../../index');
+const adapt = require('../../../index');
 const describe = require('jscodeshift-helper').describe;
 
 module.exports = adapt((fileInfo, api, options) => {

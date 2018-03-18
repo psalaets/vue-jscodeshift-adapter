@@ -1,6 +1,6 @@
 {
   "name": "vue-jscodeshift-adapter",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Run jscodeshift on Vue single file components",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,8 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "detect-indent": "^5.0.0",
+    "indent-string": "^3.2.0",
     "vue-sfc-descriptor-to-string": "^1.0.0",
     "vue-template-compiler": "^2.5.13"
   }
