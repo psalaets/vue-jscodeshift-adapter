@@ -18,8 +18,9 @@ This module wraps the `transform()` function, enabling it to run on Vue single f
 
 The two main use cases are:
 
-- a. Modify one or more parts of an sfc
-- b. Run a codemod on just the `<script>` part of an sfc
+a. Modify one or more parts of an sfc
+
+b. Run a codemod on just the `<script>` part of an sfc
 
 #### a. Modify a sfc's script, template or style
 
