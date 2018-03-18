@@ -1,5 +1,5 @@
-const { testTransform } = require('../../test-helper');
-const transform = require('../transform');
+const { testTransform } = require('../test-helper');
+const transform = require('./transform');
 
 const input = `
 <template>
