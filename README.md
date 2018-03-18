@@ -1,5 +1,7 @@
 # vue-jscodeshift-adapter
 
+[![Build Status](https://travis-ci.org/psalaets/vue-jscodeshift-adapter.svg?branch=master)](https://travis-ci.org/psalaets/vue-jscodeshift-adapter)
+
 Run [jscodeshift](https://github.com/facebook/jscodeshift) on Vue single file components
 
 ## Install
