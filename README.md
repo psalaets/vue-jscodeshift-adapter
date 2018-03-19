@@ -14,17 +14,44 @@ npm install vue-jscodeshift-adapter -D
 
 The instructions below assume you're familiar with [jscodeshift](https://github.com/facebook/jscodeshift).
 
-### 1. Create a wrapped transform function
+The two main use cases for `vue-jscodeshift-adapter` are:
 
-This module wraps the `transform()` function, enabling it to run on Vue single file components (sfc).
+1. Run a codemod on some `.js` and/or `.vue` files
+2. Modify one or more parts of some `.vue` files
 
-The two main use cases are:
+### 1. Run a codemod on some `.js` and/or `.vue` files
 
-a. Modify one or more parts of an sfc
+|When transforming|`fileInfo.source` will be|
+|-----------------|-------------------------|
+|`.js` file       | the contents of the file|
+|`.vue` file      | the contents of `<script>`|
 
-b. Run a codemod on just the `<script>` part of an sfc
+The source file will be updated appropriately based on the return value of your `transform()`.
 
-#### a. Modify a sfc's script, template or style
+#### 1a. Create wrapped transform function
+
+`my-transform.js`:
+
+```js
+const adapt = require('vue-jscodeshift-adapter');
+const someCodemod = require('some-codemod');
+
+module.exports = adapt(someCodemod);
+```
+
+#### 1b. Run jscodeshift
+
+```
+$ jscodeshift <path> -t my-transform.js --extensions vue,js
+```
+
+See [jscodeshift readme](https://github.com/facebook/jscodeshift#usage-cli) for more info.
+
+### 2. Modify one or more parts of some `.vue` files
+
+Modify a sfc's script, template or style
+
+#### 2a. Create wrapped transform function
 
 `my-transform.js`:
 
@@ -46,23 +73,7 @@ function myTransform(fileInfo, api, options) {
 module.exports = adapt(myTransform);
 ```
 
-#### b. Run an existing codemod on sfc
-
-After wrapping, you can run [jscodeshift-compatible codemods](https://www.npmjs.com/search?q=codemod%20jscodeshift&page=1&ranking=optimal) on your sfc because
-
-1. `fileInfo.source` will be the content of the sfc's `<script>`
-2.  If `transform()` returns a string, that string becomes the content of `<script>`
-
-`my-transform.js`:
-
-```js
-const adapt = require('vue-jscodeshift-adapter');
-const someCodemod = require('some-codemod');
-
-module.exports = adapt(someCodemod);
-```
-
-### 2. Run jscodeshift
+#### 2b. Run jscodeshift
 
 ```
 $ jscodeshift <path> -t my-transform.js --extensions vue
