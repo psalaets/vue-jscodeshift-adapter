@@ -3,7 +3,7 @@
 ## [1.2.0] - 2018-03-18
 ### Added
 
-- Ability to run on directory containing js and vue files.
+- Ability to run on directory containing js and vue files ([#4](https://github.com/psalaets/vue-jscodeshift-adapter/issues/4)).
 
 ## [1.1.1] - 2018-03-13
 ### Fixed
