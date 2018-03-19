@@ -9,6 +9,10 @@ module.exports = adapt;
 
 function adapt(transform) {
   return function newTransform(fileInfo, api, options) {
+    if (!fileInfo.path.endsWith('.vue')) {
+      return transform(fileInfo, api, options);
+    }
+
     const sfcDescriptor = compiler.parseComponent(fileInfo.source);
     const $ = cheerio.load(fileInfo.source);
 
