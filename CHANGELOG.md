@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.2.0] - 2018-03-18
+### Added
+
+- Ability to run on directory containing js and vue files.
+
 ## [1.1.1] - 2018-03-13
 ### Fixed
 
