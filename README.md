@@ -19,7 +19,7 @@ The two main use cases for `vue-jscodeshift-adapter` are:
 1. Run a codemod on some `.js` and/or `.vue` files
 2. Modify one or more parts of some `.vue` files
 
-### 1. Run a codemod on some `.js` and/or `.vue` files
+### Use case 1: Run a codemod on some `.js` and/or `.vue` files
 
 |When transforming|`fileInfo.source` will be|
 |-----------------|-------------------------|
@@ -47,9 +47,9 @@ $ jscodeshift <path> -t my-transform.js --extensions vue,js
 
 See [jscodeshift readme](https://github.com/facebook/jscodeshift#usage-cli) for more info.
 
-### 2. Modify one or more parts of some `.vue` files
+### Use case 2: Modify one or more parts of some `.vue` files
 
-Modify a sfc's script, template or style
+Modify a sfc's script, template or style.
 
 #### 2a. Create wrapped transform function
 
