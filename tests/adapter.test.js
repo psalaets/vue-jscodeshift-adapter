@@ -43,7 +43,8 @@ test('passes component code as fileInfo.source', () => {
   });
 
   adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, {});
 
   expect(source).toBe(script);
@@ -56,7 +57,8 @@ test('passes <script> content as fileInfo.script.content', () => {
   });
 
   adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, {});
 
   expect(scriptContent).toBe(script);
@@ -69,7 +71,8 @@ test('passes <template> content as fileInfo.template.content', () => {
   });
 
   adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, {});
 
   expect(templateContent).toBe(template);
@@ -82,7 +85,8 @@ test('passes <style> content as fileInfo.style.content', () => {
   });
 
   adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, {});
 
   expect(styleContent).toBe(style);
@@ -95,11 +99,11 @@ test('passes component path as fileInfo.path', () => {
   });
 
   adapted({
-    path: '/the/path',
+    path: '/the/path/Widget.vue',
     source: sfc(template, script, style)
   }, {}, {});
 
-  expect(path).toBe('/the/path');
+  expect(path).toBe('/the/path/Widget.vue');
 });
 
 
@@ -114,7 +118,8 @@ test('passes api to transform', () => {
   });
 
   adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, apiPassed, {});
 
   expect(apiSeen.jscodeshift).toBe(apiPassed.jscodeshift);
@@ -131,7 +136,8 @@ test('passes options to transform', () => {
   });
 
   const result = adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, optionsPassed);
 
   expect(optionsSeen.blah).toBe(optionsPassed.blah);
@@ -143,7 +149,8 @@ test('returns undefined if transform returns undefined', () => {
   });
 
   const result = adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, {});
 
   expect(result).toBe(undefined);
@@ -155,7 +162,8 @@ test('returns undefined if transform returns null', () => {
   });
 
   const result = adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, {});
 
   expect(result).toBe(undefined);
@@ -167,7 +175,8 @@ test('returns undefined if transform returns empty string', () => {
   });
 
   const result = adapted({
-    source: sfc(template, script, style)
+    source: sfc(template, script, style),
+    path: 'Widget.vue'
   }, {}, {});
 
   expect(result).toBe(undefined);
