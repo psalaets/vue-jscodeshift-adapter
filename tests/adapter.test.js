@@ -36,148 +36,201 @@ ${styleBlock}
 };
 
 
-test('passes component code as fileInfo.source', () => {
-  let source = null;
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    source = fileInfo.source;
+describe('jscodeshift mode', () => {
+  test('passes component code as fileInfo.source', () => {
+    let source = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      source = fileInfo.source;
+    });
+
+    adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, {});
+
+    expect(source).toBe(script);
   });
 
-  adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, {});
+  test('passes component path as fileInfo.path', () => {
+    let path = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      path = fileInfo.path;
+    });
 
-  expect(source).toBe(script);
+    adapted({
+      path: '/the/path/Widget.vue',
+      source: sfc(template, script, style)
+    }, {}, {});
+
+    expect(path).toBe('/the/path/Widget.vue');
+  });
+
+  test('passes api to transform', () => {
+    const apiPassed = {
+      jscodeshift: () => { },
+      stats: () => { }
+    };
+    let apiSeen = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      apiSeen = api;
+    });
+
+    adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, apiPassed, {});
+
+    expect(apiSeen.jscodeshift).toBe(apiPassed.jscodeshift);
+    expect(apiSeen.stats).toBe(apiPassed.stats);
+  });
+
+  test('passes options to transform', () => {
+    const optionsPassed = {
+      blah: 1
+    };
+    let optionsSeen = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      optionsSeen = options;
+    });
+
+    const result = adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, optionsPassed);
+
+    expect(optionsSeen.blah).toBe(optionsPassed.blah);
+  });
+
+  test('returns undefined if transform returns undefined', () => {
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      return undefined;
+    });
+
+    const result = adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, {});
+
+    expect(result).toBe(undefined);
+  });
+
+  test('returns undefined if transform returns null', () => {
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      return null;
+    });
+
+    const result = adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, {});
+
+    expect(result).toBe(undefined);
+  });
+
+  test('returns undefined if transform returns empty string', () => {
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      return '';
+    });
+
+    const result = adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, {});
+
+    expect(result).toBe(undefined);
+  });
 });
 
-test('passes <script> content as fileInfo.script.content', () => {
-  let scriptContent = null;
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    scriptContent = fileInfo.script.content;
+describe('vue only mode', () => {
+  test('passes <script> content as fileInfo.script.content', () => {
+    let scriptContent = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      scriptContent = fileInfo.script.content;
+    });
+
+    adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, {});
+
+    expect(scriptContent).toBe(script);
   });
 
-  adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, {});
+  test('passes <template> content as fileInfo.template.content', () => {
+    let templateContent = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      templateContent = fileInfo.template.content;
+    });
 
-  expect(scriptContent).toBe(script);
-});
+    adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, {});
 
-test('passes <template> content as fileInfo.template.content', () => {
-  let templateContent = null;
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    templateContent = fileInfo.template.content;
+    expect(templateContent).toBe(template);
   });
 
-  adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, {});
+  test('passes <style> content as fileInfo.style.content', () => {
+    let styleContent = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      styleContent = fileInfo.style.content;
+    });
 
-  expect(templateContent).toBe(template);
-});
+    adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, {});
 
-test('passes <style> content as fileInfo.style.content', () => {
-  let styleContent = null;
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    styleContent = fileInfo.style.content;
+    expect(styleContent).toBe(style);
   });
 
-  adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, {});
+  test('passes component path as fileInfo.path', () => {
+    let path = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      path = fileInfo.path;
+    });
 
-  expect(styleContent).toBe(style);
-});
+    adapted({
+      path: '/the/path/Widget.vue',
+      source: sfc(template, script, style)
+    }, {}, {});
 
-test('passes component path as fileInfo.path', () => {
-  let path = null;
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    path = fileInfo.path;
+    expect(path).toBe('/the/path/Widget.vue');
   });
 
-  adapted({
-    path: '/the/path/Widget.vue',
-    source: sfc(template, script, style)
-  }, {}, {});
+  test('passes api to transform', () => {
+    const apiPassed = {
+      jscodeshift: () => { },
+      stats: () => { }
+    };
+    let apiSeen = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      apiSeen = api;
+    });
 
-  expect(path).toBe('/the/path/Widget.vue');
-});
+    adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, apiPassed, {});
 
-
-test('passes api to transform', () => {
-  const apiPassed = {
-    jscodeshift: () => { },
-    stats: () => { }
-  };
-  let apiSeen = null;
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    apiSeen = api;
+    expect(apiSeen.jscodeshift).toBe(apiPassed.jscodeshift);
+    expect(apiSeen.stats).toBe(apiPassed.stats);
   });
 
-  adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, apiPassed, {});
+  test('passes options to transform', () => {
+    const optionsPassed = {
+      blah: 1
+    };
+    let optionsSeen = null;
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      optionsSeen = options;
+    });
 
-  expect(apiSeen.jscodeshift).toBe(apiPassed.jscodeshift);
-  expect(apiSeen.stats).toBe(apiPassed.stats);
-});
+    const result = adapted({
+      source: sfc(template, script, style),
+      path: 'Widget.vue'
+    }, {}, optionsPassed);
 
-test('passes options to transform', () => {
-  const optionsPassed = {
-    blah: 1
-  };
-  let optionsSeen = null;
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    optionsSeen = options;
+    expect(optionsSeen.blah).toBe(optionsPassed.blah);
   });
-
-  const result = adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, optionsPassed);
-
-  expect(optionsSeen.blah).toBe(optionsPassed.blah);
-});
-
-test('returns undefined if transform returns undefined', () => {
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    return undefined;
-  });
-
-  const result = adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, {});
-
-  expect(result).toBe(undefined);
-});
-
-test('returns undefined if transform returns null', () => {
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    return null;
-  });
-
-  const result = adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, {});
-
-  expect(result).toBe(undefined);
-});
-
-test('returns undefined if transform returns empty string', () => {
-  const adapted = adapter(function transform(fileInfo, api, options) {
-    return '';
-  });
-
-  const result = adapted({
-    source: sfc(template, script, style),
-    path: 'Widget.vue'
-  }, {}, {});
-
-  expect(result).toBe(undefined);
 });
