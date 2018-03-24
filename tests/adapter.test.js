@@ -144,17 +144,4 @@ describe('vue only mode', () => {
       }, {}, {});
     }).toThrow(Error);
   });
-
-  test.skip('throws when transform writes to fileInfo.source', () => {
-    const adapted = adapter(function transform(fileInfo, api, options) {
-      fileInfo.source = 'var a = 4;';
-    }, settings);
-
-    expect(() => {
-      adapted({
-        source: sfc(template, script, style),
-        path: 'Widget.vue'
-      }, {}, {});
-    }).toThrow(Error);
-  });
 });
