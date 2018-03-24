@@ -1,5 +1,4 @@
 const compiler = require('vue-template-compiler');
-const descriptorToString = require('vue-sfc-descriptor-to-string');
 const cheerio = require('cheerio');
 
 const detectIndent = require('detect-indent');
