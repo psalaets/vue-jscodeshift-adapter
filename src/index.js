@@ -5,10 +5,16 @@ const cheerio = require('cheerio');
 const detectIndent = require('detect-indent');
 const indentString = require('indent-string');
 
+const jscodeshiftModeAdapter = require('./jscodeshift-mode');
+
 module.exports = adapt;
 
 function adapt(transform, settings = {}) {
   const vueOnly = settings.vueOnly || false;
+
+  if (!vueOnly) {
+    return jscodeshiftModeAdapter(transform, settings);
+  }
 
   return function newTransform(fileInfo, api, options) {
     if (vueOnly && !fileInfo.path.endsWith('.vue')) {

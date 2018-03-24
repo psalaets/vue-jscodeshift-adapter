@@ -1,4 +1,4 @@
-const adapt = require('../../../index');
+const adapt = require('../../../src/index');
 
 module.exports = adapt((fileInfo, api, options) => {
   fileInfo.style.content = `
