@@ -32,12 +32,6 @@ ${style ? styleBlock : ''}
 `;
 };
 
-/*
-vue with no <script>, doesn't invoke transform, returns undefined
-vue with <script>, runs transform with fileInfo.source == script
-js file, just runs unwrapped transform
-*/
-
 describe('jscodeshift mode', () => {
   describe('transforming js file', () => {
     test('passes js content as fileInfo.source', () => {
@@ -71,7 +65,7 @@ describe('jscodeshift mode', () => {
       expect(source).toBe(script);
     });
 
-    test('skips transform when there is no <script>', () => {
+    test('is no-op and skips transform when there is no <script>', () => {
       let invokedTransform = false;
       const adapted = adapter(function transform(fileInfo, api, options) {
         invokedTransform = true;
@@ -137,7 +131,7 @@ describe('jscodeshift mode', () => {
       expect(optionsSeen.blah).toBe(optionsPassed.blah);
     });
 
-    test('returns undefined if transform returns undefined', () => {
+    test('is no-op if transform returns undefined', () => {
       const adapted = adapter(function transform(fileInfo, api, options) {
         return undefined;
       });
@@ -150,7 +144,7 @@ describe('jscodeshift mode', () => {
       expect(result).toBe(undefined);
     });
 
-    test('returns undefined if transform returns null', () => {
+    test('is no-op if transform returns null', () => {
       const adapted = adapter(function transform(fileInfo, api, options) {
         return null;
       });
@@ -163,7 +157,7 @@ describe('jscodeshift mode', () => {
       expect(result).toBe(undefined);
     });
 
-    test('returns undefined if transform returns empty string', () => {
+    test('is no-op if transform returns empty string', () => {
       const adapted = adapter(function transform(fileInfo, api, options) {
         return '';
       });
