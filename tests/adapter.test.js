@@ -142,11 +142,15 @@ describe('jscodeshift mode', () => {
 });
 
 describe('vue only mode', () => {
+  const settings = {
+    vueOnly: true
+  };
+
   test('passes <script> content as fileInfo.script.content', () => {
     let scriptContent = null;
     const adapted = adapter(function transform(fileInfo, api, options) {
       scriptContent = fileInfo.script.content;
-    });
+    }, settings);
 
     adapted({
       source: sfc(template, script, style),
@@ -160,7 +164,7 @@ describe('vue only mode', () => {
     let templateContent = null;
     const adapted = adapter(function transform(fileInfo, api, options) {
       templateContent = fileInfo.template.content;
-    });
+    }, settings);
 
     adapted({
       source: sfc(template, script, style),
@@ -174,7 +178,7 @@ describe('vue only mode', () => {
     let styleContent = null;
     const adapted = adapter(function transform(fileInfo, api, options) {
       styleContent = fileInfo.style.content;
-    });
+    }, settings);
 
     adapted({
       source: sfc(template, script, style),
@@ -188,7 +192,7 @@ describe('vue only mode', () => {
     let path = null;
     const adapted = adapter(function transform(fileInfo, api, options) {
       path = fileInfo.path;
-    });
+    }, settings);
 
     adapted({
       path: '/the/path/Widget.vue',
@@ -206,7 +210,7 @@ describe('vue only mode', () => {
     let apiSeen = null;
     const adapted = adapter(function transform(fileInfo, api, options) {
       apiSeen = api;
-    });
+    }, settings);
 
     adapted({
       source: sfc(template, script, style),
@@ -224,7 +228,7 @@ describe('vue only mode', () => {
     let optionsSeen = null;
     const adapted = adapter(function transform(fileInfo, api, options) {
       optionsSeen = options;
-    });
+    }, settings);
 
     const result = adapted({
       source: sfc(template, script, style),
@@ -232,5 +236,31 @@ describe('vue only mode', () => {
     }, {}, optionsPassed);
 
     expect(optionsSeen.blah).toBe(optionsPassed.blah);
+  });
+
+  test('throws when it sees a non-vue file', () => {
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      fileInfo.script.content = 'var a = 4;';
+    }, settings);
+
+    expect(() => {
+      adapted({
+        source: sfc(template, script, style),
+        path: 'api.js'
+      }, {}, {});
+    }).toThrow(Error);
+  });
+
+  test('throws when transform writes to fileInfo.source', () => {
+    const adapted = adapter(function transform(fileInfo, api, options) {
+      fileInfo.source = 'var a = 4;';
+    }, settings);
+
+    expect(() => {
+      adapted({
+        source: sfc(template, script, style),
+        path: 'Widget.vue'
+      }, {}, {});
+    }).toThrow(Error);
   });
 });

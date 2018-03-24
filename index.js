@@ -7,8 +7,14 @@ const indentString = require('indent-string');
 
 module.exports = adapt;
 
-function adapt(transform) {
+function adapt(transform, settings = {}) {
+  const vueOnly = settings.vueOnly || false;
+
   return function newTransform(fileInfo, api, options) {
+    if (vueOnly && !fileInfo.path.endsWith('.vue')) {
+      throw new Error(`vueOnly mode can only process vue files but received: ${fileInfo.path}`);
+    }
+
     if (!fileInfo.path.endsWith('.vue')) {
       return transform(fileInfo, api, options);
     }
