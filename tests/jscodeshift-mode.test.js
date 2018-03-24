@@ -1,4 +1,5 @@
 const adapter = require('../src/index');
+const sfc = require('./make-sfc');
 
 const template = `
   <div class="widget">{{name}}</div>
@@ -17,20 +18,6 @@ const style = `
   color: red;
 }
 `;
-
-const sfc = ({template, script, style}) => {
-  const templateBlock = `<template>${template}</template>`;
-  const scriptBlock = `<script>${script}</script>`;
-  const styleBlock = `<style>${style}</style>`;
-
-  return `
-${template ? templateBlock : ''}
-
-${script ? scriptBlock : ''}
-
-${style ? styleBlock : ''}
-`;
-};
 
 describe('jscodeshift mode', () => {
   describe('transforming js file', () => {
