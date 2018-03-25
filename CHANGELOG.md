@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.0.0] - 2018-03-25
+### Breaking Change
+
+The "modify any block of a vue component" use case is temporarily not supported until the API is figured out.
+
+As of 2.0.0, this module can only
+
+- transform js files
+- transform the `<script>` block of vue files
+
 ## [1.2.0] - 2018-03-18
 ### Added
 
