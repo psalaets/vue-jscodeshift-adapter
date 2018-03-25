@@ -1,7 +1,7 @@
 const adapt = require('../../../src/index');
 
 module.exports = adapt((fileInfo, api, options) => {
-  fileInfo.script.content = `
+  return `
 export default {};
 `;
 });

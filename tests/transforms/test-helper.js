@@ -15,7 +15,7 @@ function testTransform(transform, path, input, output, options = {}) {
     source: input
   };
 
-  it.skip('transforms correctly', () => {
+  it('transforms correctly', () => {
     runInlineTest(transform, options, fileInfo, output);
   });
 }

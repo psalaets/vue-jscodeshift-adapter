@@ -1,3 +1,4 @@
+const descriptorToString = require('vue-sfc-descriptor-to-string');
 const parseSfc = require('./parse-sfc');
 
 module.exports = adapt;

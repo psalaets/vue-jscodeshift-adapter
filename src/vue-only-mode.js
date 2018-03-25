@@ -1,3 +1,4 @@
+const descriptorToString = require('vue-sfc-descriptor-to-string');
 const parseSfc = require('./parse-sfc');
 
 module.exports = adapt;
@@ -8,7 +9,7 @@ function adapt(transform, settings) {
       throw new Error(`vueOnly mode can only process vue files but received: ${fileInfo.path}`);
     }
 
-    const newFileInfo = {
+    const vueFileInfo = {
       path: fileInfo.path
     };
 
@@ -17,35 +18,35 @@ function adapt(transform, settings) {
     const templateBlock = sfcDescriptor.template;
     if (templateBlock) {
       const template = templateBlock.content;
-      newFileInfo.template = createOutputBlock('template', template);
+      vueFileInfo.template = createOutputBlock('template', template);
     }
 
     const scriptBlock = sfcDescriptor.script;
     if (scriptBlock) {
       const script = scriptBlock.content;
-      newFileInfo.script = createOutputBlock('script', script);
+      vueFileInfo.script = createOutputBlock('script', script);
     }
 
     const styleBlock = sfcDescriptor.styles[0];
     if (styleBlock) {
       const style = styleBlock.content;
-      newFileInfo.style = createOutputBlock('style', style);
+      vueFileInfo.style = createOutputBlock('style', style);
     }
 
-    transform(newFileInfo, api, options);
+    const transformedFileInfo = transform(vueFileInfo, api, options);
 
     const hasChanges = [
-      newFileInfo.script,
-      newFileInfo.template,
-      newFileInfo.style
+      vueFileInfo.script,
+      vueFileInfo.template,
+      vueFileInfo.style
     ]
       .filter(block => !!block)
       .some(block => block.contentChanged);
 
     if (hasChanges) {
-      templateBlock.content = newFileInfo.template.content;
-      scriptBlock.content = newFileInfo.script.content;
-      styleBlock.content = newFileInfo.style.content;
+      templateBlock.content = vueFileInfo.template.content;
+      scriptBlock.content = vueFileInfo.script.content;
+      styleBlock.content = vueFileInfo.style.content;
 
       return descriptorToString(sfcDescriptor, {
         indents: {
