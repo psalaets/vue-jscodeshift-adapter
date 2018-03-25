@@ -64,8 +64,8 @@ describe('jscodeshift mode', () => {
         path: 'Widget.vue'
       }, {}, {});
 
-      expect(invokedTransform).toBe(false);
       expect(result).toBe(undefined);
+      expect(invokedTransform).toBe(false);
     });
 
     test('passes component path as fileInfo.path', () => {
