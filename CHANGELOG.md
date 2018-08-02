@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.0.1] - 2018-08-01
+
+- Update dependencies
+
 ## [2.0.0] - 2018-03-25
 ### Breaking Change
 

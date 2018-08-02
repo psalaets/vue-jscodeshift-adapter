@@ -1,6 +1,6 @@
 {
   "name": "vue-jscodeshift-adapter",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Run jscodeshift on Vue single file components",
   "main": "src/index.js",
   "scripts": {
