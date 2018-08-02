@@ -25,8 +25,8 @@
     "url": "https://github.com/psalaets/vue-jscodeshift-adapter/issues"
   },
   "devDependencies": {
-    "jest": "^22.1.4",
-    "jscodeshift": "^0.4.1",
+    "jest": "^23.4.2",
+    "jscodeshift": "^0.5.1",
     "jscodeshift-helper": "^1.1.0"
   },
   "dependencies": {
@@ -35,5 +35,8 @@
     "indent-string": "^3.2.0",
     "vue-sfc-descriptor-to-string": "^1.0.0",
     "vue-template-compiler": "^2.5.13"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
