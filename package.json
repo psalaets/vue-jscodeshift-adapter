@@ -35,5 +35,8 @@
     "indent-string": "^3.2.0",
     "vue-sfc-descriptor-to-string": "^1.0.0",
     "vue-template-compiler": "^2.5.13"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
