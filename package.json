@@ -30,7 +30,7 @@
     "jscodeshift-helper": "^1.1.0"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
+    "cheerio": "^1.0.0-rc.3",
     "detect-indent": "^5.0.0",
     "indent-string": "^3.2.0",
     "vue-sfc-descriptor-to-string": "^1.0.0",
