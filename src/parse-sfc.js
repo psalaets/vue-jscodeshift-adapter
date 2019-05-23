@@ -24,5 +24,5 @@ function fixTemplateIndent(sfcDescriptor, source) {
   const templateIndent = detectIndent(fullTemplate);
 
   const templateBlock = sfcDescriptor.template;
-  return indentString(templateBlock.content, templateIndent.count, templateIndent.indent);
+  return indentString(templateBlock.content, templateIndent.amount, templateIndent.indent);
 }
