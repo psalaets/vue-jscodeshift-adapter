@@ -18,8 +18,8 @@ The instructions below assume you're familiar with [jscodeshift](https://github.
 
 |When transforming|`fileInfo.source` will be|
 |-----------------|-------------------------|
-|`.js` file       | the contents of the file|
-|`.vue` file      | the contents of `<script>`|
+|`.js`            | the contents of the file|
+|`.vue`           | the contents of `<script>`|
 
 The source file will be updated appropriately based on the return value of your `transform()`.
 
@@ -27,9 +27,8 @@ The source file will be updated appropriately based on the return value of your 
 
 #### 1. Create wrapped transform function
 
-`my-transform.js`:
-
 ```js
+// my-transform.js
 const adapt = require('vue-jscodeshift-adapter');
 const someCodemod = require('some-codemod');
 
