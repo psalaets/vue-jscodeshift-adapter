@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.0.3] - 2019-12-11
+
+- Update dependencies
+
 ## [2.0.2] - 2019-05-23
 
 - Update dependencies
