@@ -9,7 +9,7 @@ function adapt(transform, settings) {
       return transform(fileInfo, api, options);
     }
 
-    const sfcDescriptor = parseSfc(fileInfo.source);
+    const { sfcDescriptor, indents } = parseSfc(fileInfo.source);
     const scriptBlock = sfcDescriptor.script;
 
     if (scriptBlock) {
@@ -20,9 +20,7 @@ function adapt(transform, settings) {
         scriptBlock.content = newScriptContent;
 
         return descriptorToString(sfcDescriptor, {
-          indents: {
-            template: 0
-          }
+          indents
         });
       } else {
         return undefined;
