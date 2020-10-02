@@ -2,7 +2,7 @@
 
 ## [2.2.0] - 2020-10-02
 
-- Preserve indent of `<script>` and `<style>` tags. Thanks to @SevInf
+- Preserve indent of `<script>` and `<style>` tags. Thanks to [@SevInf](https://github.com/SevInf)
 
 ## [2.1.0] - 2020-05-15
 
