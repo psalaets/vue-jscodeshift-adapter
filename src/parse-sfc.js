@@ -1,28 +1,40 @@
 const compiler = require('vue-template-compiler');
-const cheerio = require('cheerio');
-
-const detectIndent = require('detect-indent');
-const indentString = require('indent-string');
 
 module.exports = function parse(source) {
   const sfcDescriptor = compiler.parseComponent(source);
 
+  const indents = {}
   if (sfcDescriptor.template) {
-    sfcDescriptor.template.content = fixTemplateIndent(sfcDescriptor, source);
+    indents.template = detectIndent(sfcDescriptor.template, source);
   }
 
-  return sfcDescriptor;
+  if (sfcDescriptor.script) {
+    indents.script = detectIndent(sfcDescriptor.script, source);
+  }
+
+  if (sfcDescriptor.styles.length > 0)  {
+    indents.style = detectIndent(sfcDescriptor.styles[0], source);
+  }
+
+  return { sfcDescriptor, indents };
 };
 
-// assumes sfc has a <template>
-// returns content for <template> with correct indent
-function fixTemplateIndent(sfcDescriptor, source) {
-  const $ = cheerio.load(source);
+function detectIndent(sfcBlock, source) {
+  const nonEmptyPaddingsPerLine = source.substring(sfcBlock.start, sfcBlock.end)
+    .split('\n')
+    .filter(line => line !== '')
+    .map(getLinePadding);
 
-  // contents of template including outer <template> pair
-  const fullTemplate = $.html($('template'));
-  const templateIndent = detectIndent(fullTemplate);
+  if (nonEmptyPaddingsPerLine.length === 0) {
+    return 0;
+  }
+  return Math.min(...nonEmptyPaddingsPerLine)
+}
 
-  const templateBlock = sfcDescriptor.template;
-  return indentString(templateBlock.content, templateIndent.amount, templateIndent.indent);
+function getLinePadding(line) {
+  const spacesMatch = line.match(/^ +/);
+  if (!spacesMatch) {
+    return 0;
+  }
+  return spacesMatch[0].length;
 }
