@@ -22,7 +22,7 @@ module.exports = function parse(source) {
 function detectIndent(sfcBlock, source) {
   const nonEmptyPaddingsPerLine = source.substring(sfcBlock.start, sfcBlock.end)
     .split('\n')
-    .filter(line => line !== '')
+    .filter(line => !line.match(/^\s*$/))
     .map(getLinePadding);
 
   if (nonEmptyPaddingsPerLine.length === 0) {
