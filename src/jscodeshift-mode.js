@@ -1,5 +1,7 @@
 const descriptorToString = require('vue-sfc-descriptor-to-string');
+
 const parseSfc = require('./parse-sfc');
+const fixWhitespace = require('./fix-whitespace');
 
 module.exports = adapt;
 
@@ -10,12 +12,20 @@ function adapt(transform, settings) {
     }
 
     const { sfcDescriptor, indents } = parseSfc(fileInfo.source);
+
+    fixWhitespace(sfcDescriptor, indents);
+
     const scriptBlock = sfcDescriptor.script;
 
     if (scriptBlock) {
-      fileInfo.source = scriptBlock.content;
+      const newScriptContent = transform(
+        Object.assign({}, fileInfo, {
+          source: scriptBlock.content,
+        }),
+        api,
+        options
+      );
 
-      const newScriptContent = transform(fileInfo, api, options);
       if (!!newScriptContent) {
         scriptBlock.content = newScriptContent;
 
@@ -30,4 +40,3 @@ function adapt(transform, settings) {
     }
   };
 }
-
