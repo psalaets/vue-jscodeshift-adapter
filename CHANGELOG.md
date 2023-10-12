@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.2.1] - 2023-10-11
+
+- Fix indent of whitespace-only lines. Thanks to [@nemoDreamer](https://github.com/nemoDreamer).
+
 ## [2.2.0] - 2020-10-02
 
 - Preserve indent of `<script>` and `<style>` tags. Thanks to [@SevInf](https://github.com/SevInf)
