@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-  - "12"
-  - "10"
-  - "8"
+  - "20"
+  - "18"
+  - "16"
 # copied from https://github.com/greenkeeperio/greenkeeper-lockfile
 before_install:
 # package-lock.json was introduced in npm@5
