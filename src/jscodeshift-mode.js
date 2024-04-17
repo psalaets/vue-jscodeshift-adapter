@@ -1,7 +1,5 @@
 import descriptorToString from 'vue-sfc-descriptor-to-string';
-
-import { parseSfc } from './parse-sfc.js';
-import fixWhitespace from './fix-whitespace.js';
+import { parse } from '@vue/compiler-sfc';
 
 export function jscodeshiftMode(transform, settings) {
   return function newTransform(fileInfo, api, options) {
@@ -9,9 +7,7 @@ export function jscodeshiftMode(transform, settings) {
       return transform(fileInfo, api, options);
     }
 
-    const { sfcDescriptor, indents } = parseSfc(fileInfo.source);
-
-    fixWhitespace(sfcDescriptor, indents);
+    const { descriptor: sfcDescriptor } = parse(fileInfo.source);
 
     if (sfcDescriptor.script || sfcDescriptor.scriptSetup) {
       /**
@@ -50,7 +46,7 @@ export function jscodeshiftMode(transform, settings) {
       }
 
       return hasChanges
-        ? descriptorToString(sfcDescriptor, { indents })
+        ? descriptorToString(sfcDescriptor)
         : undefined;
     } else {
       return undefined;
