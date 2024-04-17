@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "jscodeshift": "^0.9.0",
+    "jscodeshift": "^0.15.2",
     "jscodeshift-helper": "^1.1.0"
   },
   "dependencies": {
