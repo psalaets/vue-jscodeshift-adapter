@@ -1,5 +1,15 @@
 # Change Log
 
+## [3.0.0] - 2024-04-17
+
+### Breaking
+
+- Switch to ES Modules
+
+### Fixed
+
+- Handle vue files with both `<script>` and `<script setup>`.
+
 ## [2.2.1] - 2023-10-11
 
 - Fix indent of whitespace-only lines. Thanks to [@nemoDreamer](https://github.com/nemoDreamer).

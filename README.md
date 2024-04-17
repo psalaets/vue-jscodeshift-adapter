@@ -29,10 +29,10 @@ The source file will be updated appropriately based on the return value of your 
 
 ```js
 // my-transform.js
-const adapt = require('vue-jscodeshift-adapter');
-const someCodemod = require('some-codemod');
+import adapt from 'vue-jscodeshift-adapter';
+import someCodemod from 'some-codemod';
 
-module.exports = adapt(someCodemod);
+export default adapt(someCodemod);
 ```
 
 #### 2. Run jscodeshift
