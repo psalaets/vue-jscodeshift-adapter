@@ -1,5 +1,5 @@
-const adapter = require('../src/index');
-const sfc = require('./make-sfc');
+import adapter from '../src/index.js';
+import sfc from './make-sfc.js';
 
 const template = `
   <div class="widget">{{name}}</div>

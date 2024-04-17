@@ -5,8 +5,8 @@
  * So we're giving them an additional indentation in advance, while we still
  * have all blocks and their respective indentations separate.
  */
-module.exports = function fixWhitespace(sfcDescriptor, indents) {
-  ['template', 'script'].forEach((blockId) => {
+export default function fixWhitespace(sfcDescriptor, indents) {
+  ['template', 'script', 'scriptSetup'].forEach((blockId) => {
     const block = sfcDescriptor[blockId];
     const indent = indents[blockId];
 

@@ -1,5 +1,5 @@
-const { testTransform } = require('../test-helper');
-const transform = require('./transform');
+import { testTransform } from '../test-helper.js';
+import transform from './transform.js';
 
 const input = `
 <template>

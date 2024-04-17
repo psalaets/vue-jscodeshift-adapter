@@ -1,7 +1,6 @@
-const adapt = require('../../../src/index');
-const describe = require('jscodeshift-helper').describe;
+import adapt from '../../../src/index.js';
 
-module.exports = adapt((fileInfo, api, options) => {
+export default adapt((fileInfo, api, options) => {
   const j = api.jscodeshift;
 
   return j(fileInfo.source)

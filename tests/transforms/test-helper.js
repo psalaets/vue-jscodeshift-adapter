@@ -1,4 +1,4 @@
-const runInlineTest = require('jscodeshift/dist/testUtils').runInlineTest;
+import { runInlineTest } from 'jscodeshift/dist/testUtils';
 
 /**
  * Test a transform function.
@@ -9,7 +9,7 @@ const runInlineTest = require('jscodeshift/dist/testUtils').runInlineTest;
  * @param {String} output  - Expected transform result
  * @param {Object} options - Options passed to transform, optional
  */
-function testTransform(transform, path, input, output, options = {}) {
+export function testTransform(transform, path, input, output, options = {}) {
   const fileInfo = {
     path,
     source: input
@@ -19,5 +19,3 @@ function testTransform(transform, path, input, output, options = {}) {
     runInlineTest(transform, options, fileInfo, output);
   });
 }
-
-module.exports.testTransform = testTransform;

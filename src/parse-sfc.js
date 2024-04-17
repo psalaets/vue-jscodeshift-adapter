@@ -1,26 +1,49 @@
-const compiler = require('vue-template-compiler');
+import { parse } from '@vue/compiler-sfc';
 
-module.exports = function parse(source) {
-  const sfcDescriptor = compiler.parseComponent(source);
+/**
+ * @typedef {object} Indents
+ * @property {number} [template]
+ * @property {number} [scriptSetup]
+ * @property {number} [script]
+ * @property {number} [styles]
+ *
+ * @typedef {object} ParseResult
+ * @property {import('@vue/compiler-sfc').SFCDescriptor} sfcDescriptor
+ * @property {Indents} indents
+ */
+
+/**
+ * @param {string} source
+ * @return {ParseResult}
+ */
+export function parseSfc(source) {
+  const { descriptor } = parse(source);
 
   const indents = {}
-  if (sfcDescriptor.template) {
-    indents.template = detectIndent(sfcDescriptor.template, source);
+  if (descriptor.template) {
+    indents.template = detectIndent(descriptor.template, source);
   }
 
-  if (sfcDescriptor.script) {
-    indents.script = detectIndent(sfcDescriptor.script, source);
+  if (descriptor.scriptSetup) {
+    indents.scriptSetup = detectIndent(descriptor.scriptSetup, source);
   }
 
-  if (sfcDescriptor.styles.length > 0)  {
-    indents.style = detectIndent(sfcDescriptor.styles[0], source);
+  if (descriptor.script) {
+    indents.script = detectIndent(descriptor.script, source);
   }
 
-  return { sfcDescriptor, indents };
+  if (descriptor.styles.length > 0)  {
+    indents.style = detectIndent(descriptor.styles[0], source);
+  }
+
+  return { sfcDescriptor: descriptor, indents };
 };
 
+/**
+ * @param {import('@vue/compiler-sfc').SFCBlock} sfcBlock
+ */
 function detectIndent(sfcBlock, source) {
-  const nonEmptyPaddingsPerLine = source.substring(sfcBlock.start, sfcBlock.end)
+  const nonEmptyPaddingsPerLine = source.substring(sfcBlock.loc.start.offset, sfcBlock.loc.end.offset)
     .split('\n')
     .filter(line => !line.match(/^\s*$/))
     .map(getLinePadding);
@@ -28,6 +51,7 @@ function detectIndent(sfcBlock, source) {
   if (nonEmptyPaddingsPerLine.length === 0) {
     return 0;
   }
+
   return Math.min(...nonEmptyPaddingsPerLine)
 }
 

@@ -1,6 +1,6 @@
-const adapt = require('../../../src/index');
+import adapt from '../../../src/index.js';
 
-module.exports = adapt((fileInfo, api, options) => {
+export default adapt((fileInfo, api, options) => {
   return `
 export default {};
 `;

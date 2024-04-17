@@ -1,13 +1,12 @@
-module.exports = ({ template, script, style }) => {
-  const templateBlock = `<template>${template}</template>`;
-  const scriptBlock = `<script>${script}</script>`;
-  const styleBlock = `<style>${style}</style>`;
+export default ({ template, script, scriptSetup, style }) => {
+  const source = [
+    template    ? `<template>${template}</template>`      : '',
+    script      ? `<script>${script}</script>`            : '',
+    scriptSetup ? `<script setup>${scriptSetup}</script>` : '',
+    style       ? `<style>${style}</style>`               : '',
+  ]
+    .filter(content => content)
+    .join('\n\n');
 
-  return `
-${template ? templateBlock : ''}
-
-${script ? scriptBlock : ''}
-
-${style ? styleBlock : ''}
-`;
+  return '\n' + source + '\n';
 };

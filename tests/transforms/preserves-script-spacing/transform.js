@@ -1,7 +1,8 @@
-const adapt = require('../../../src/index');
+import adapt from '../../../src/index.js';
 
-module.exports = adapt((fileInfo, api, options) => {
-  return `
-export default {}
-`;
+export default adapt((fileInfo, api, options) => {
+  return api.jscodeshift(fileInfo.source)
+    .findVariableDeclarators('foo')
+    .renameTo('bar')
+    .toSource();
 });

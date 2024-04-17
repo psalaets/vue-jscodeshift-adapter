@@ -1,7 +1,5 @@
-const jscodeshiftMode = require('./jscodeshift-mode');
+import { jscodeshiftMode } from './jscodeshift-mode.js';
 
-module.exports = adapt;
-
-function adapt(transform) {
+export default function adapt(transform) {
   return jscodeshiftMode(transform);
 }
