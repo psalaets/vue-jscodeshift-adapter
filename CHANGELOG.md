@@ -8,7 +8,7 @@
 
 ### Fixed
 
-- Handle vue files with both `<script>` and `<script setup>`.
+- Handle vue files that contain both `<script>` and `<script setup>`.
 
 ## [2.2.1] - 2023-10-11
 
